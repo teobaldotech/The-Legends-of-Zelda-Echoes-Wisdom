@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Guia Estratégico - Zelda: Echoes of Wisdom</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+    h1, h2 { color: #2c3e50; }
+    button, select { margin: 5px; padding: 8px 12px; cursor: pointer; }
+    .region { display: none; margin-top: 20px; }
+    .active { display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background-color: #ecf0f1; }
+    #ecoList li { margin: 5px 0; }
+  </style>
+</head>
+<body>
+
+  <h1>Guia Estratégico Interativo - Zelda: Echoes of Wisdom</h1>
+  <p>Explore Hyrule com inteligência! Escolha uma região para ver dicas específicas:</p>
+
+  <!-- Navegação por regiões -->
+  <div>
+    <button onclick="showRegion('hyrule')">🏰 Hyrule</button>
+    <button onclick="showRegion('jabul')">🌊 Jabul Waters</button>
+    <button onclick="showRegion('eldin')">🔥 Eldin Volcano</button>
+    <button onclick="showRegion('gerudo')">🌵 Gerudo Desert</button>
+    <button onclick="showRegion('forest')">🌲 Eternal Forest</button>
+  </div>
+
+  <!-- Regiões -->
+  <div id="hyrule" class="region active">
+    <h2>🏰 Hyrule Castle Town</h2>
+    <ul>
+      <li><strong>Foque em:</strong> Cama Velha, Trampolim, Smoothies</li>
+      <li><strong>Dica:</strong> Explore o subterrâneo do castelo para encontrar Ecos raros.</li>
+    </ul>
+  </div>
+
+  <div id="jabul" class="region">
+    <h2>🌊 Jabul Waters</h2>
+    <ul>
+      <li><strong>Foque em:</strong> Piso Voador, Bloco de Gelo</li>
+      <li><strong>Dica:</strong> Combine trampolim com piso voador para criar pontes móveis.</li>
+    </ul>
+  </div>
+
+  <div id="eldin" class="region">
+    <h2>🔥 Eldin Volcano</h2>
+    <ul>
+      <li><strong>Foque em:</strong> Amuletos de resistência ao fogo, Bloco de Pedra</li>
+      <li><strong>Dica:</strong> Use ventiladores para empurrar inimigos na lava.</li>
+    </ul>
+  </div>
+
+  <div id="gerudo" class="region">
+    <h2>🌵 Gerudo Desert</h2>
+    <ul>
+      <li><strong>Foque em:</strong> Ventilador, Bloco de Pedra</li>
+      <li><strong>Dica:</strong> Crie escadas com camas e use trampolins para alcançar plataformas suspensas.</li>
+    </ul>
+  </div>
+
+  <div id="forest" class="region">
+    <h2>🌲 Eternal Forest</h2>
+    <ul>
+      <li><strong>Foque em:</strong> Bloco de Gelo, Smoothies de velocidade</li>
+      <li><strong>Dica:</strong> Copie inimigos com ataques à distância e posicione-os estrategicamente.</li>
+    </ul>
+  </div>
+
+  <!-- Quiz Interativo -->
+  <h2>🎮 Quiz: Qual Eco usar?</h2>
+  <p>Qual Eco é ideal para atravessar abismos?</p>
+  <button onclick="checkAnswer('a')">A) Bloco de Pedra</button>
+  <button onclick="checkAnswer('b')">B) Piso Voador</button>
+  <button onclick="checkAnswer('c')">C) Trampolim</button>
+  <p id="quizResult"></p>
+
+  <!-- Filtro de Ecos -->
+  <h2>🔍 Filtrar Ecos por Função</h2>
+  <select onchange="filterEcos(this.value)">
+    <option value="todos">Todos</option>
+    <option value="exploracao">Exploração</option>
+    <option value="combate">Combate</option>
+    <option value="suporte">Suporte</option>
+  </select>
+
+  <ul id="ecoList">
+    <li data-type="exploracao" title="Cria escadas e plataformas improvisadas.">🛏️ Cama Velha</li>
+    <li data-type="exploracao" title="Permite saltos verticais altos.">🪀 Trampolim</li>
+    <li data-type="exploracao" title="Plataforma móvel para atravessar abismos.">🪶 Piso Voador</li>
+    <li data-type="combate" title="Transforma Zelda em combatente corpo a corpo.">⚔️ Espadachim</li>
+    <li data-type="suporte" title="Cura e buffs com ingredientes.">🍹 Smoothies</li>
+    <li data-type="combate" title="Empurra inimigos e objetos.">🌪️ Ventilador</li>
+  </ul>
+
+  <!-- Tabela de Ecos -->
+  <h2>📋 Tabela de Ecos Estratégicos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Eco</th>
+        <th>Função Estratégica</th>
+        <th>Dica</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cama Velha</td>
+        <td>Escadas e plataformas</td>
+        <td>Empilhe para alcançar áreas altas</td>
+      </tr>
+      <tr>
+        <td>Trampolim</td>
+        <td>Saltos verticais</td>
+        <td>Combine com cama para puzzles verticais</td>
+      </tr>
+      <tr>
+        <td>Piso Voador</td>
+        <td>Plataforma móvel</td>
+        <td>Ideal para atravessar abismos</td>
+      </tr>
+      <tr>
+        <td>Bloco de Gelo</td>
+        <td>Congela inimigos e ativa mecanismos</td>
+        <td>Use para bloquear caminhos ou congelar armadilhas</td>
+      </tr>
+      <tr>
+        <td>Ventilador</td>
+        <td>Empurra inimigos e objetos</td>
+        <td>Afaste inimigos ou mova itens distantes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Scripts -->
+  <script>
+    function showRegion(regionId) {
+      document.querySelectorAll('.region').forEach(div => {
+        div.classList.remove('active');
+      });
+      document.getElementById(regionId).classList.add('active');
+    }
+
+    function checkAnswer(choice) {
+      const result = document.getElementById('quizResult');
+      if (choice === 'b') {
+        result.textContent = "✅ Correto! Piso Voador é perfeito para abismos.";
+      } else {
+        result.textContent = "❌ Ops! Tente novamente.";
+      }
+    }
+
+    function filterEcos(tipo) {
+      document.querySelectorAll('#ecoList li').forEach(li => {
+        li.style.display = (tipo === 'todos' || li.dataset.type === tipo) ? 'list-item' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
