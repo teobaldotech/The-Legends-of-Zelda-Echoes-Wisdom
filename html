@@ -1,71 +1,10 @@
-<!-- Combinações Estratégicas de Ecos -->
-<h2>🧪 Combinações Estratégicas de Ecos</h2>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Combinações Estratégicas de Ecos</title>
 
-<!-- Filtro por tipo de combinação -->
-<label for="comboFilter">Filtrar por tipo:</label>
-<select id="comboFilter" onchange="filtrarCombos(this.value)">
-  <option value="todos">Todos</option>
-  <option value="exploracao">Exploração</option>
-  <option value="combate">Combate</option>
-  <option value="suporte">Suporte</option>
-</select>
-
-<table id="comboTable">
-  <thead>
-    <tr>
-      <th>Combinação</th>
-      <th>Efeito Estratégico</th>
-      <th>Tipo</th>
-      <th>Região Recomendada</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr data-tipo="exploracao">
-      <td>🛏️ Cama Velha + 🪀 Trampolim</td>
-      <td>Escadas com impulso vertical</td>
-      <td>Exploração</td>
-      <td>Gerudo Desert, Hyrule Castle</td>
-    </tr>
-    <tr data-tipo="exploracao">
-      <td>🪀 Trampolim + 🪶 Piso Voador</td>
-      <td>Ponte móvel com salto vertical</td>
-      <td>Exploração</td>
-      <td>Jabul Waters, Eternal Forest</td>
-    </tr>
-    <tr data-tipo="combate">
-      <td>🌪️ Ventilador + 🧊 Bloco de Gelo</td>
-      <td>Empurra bloco congelado para ativar mecanismos</td>
-      <td>Combate</td>
-      <td>Eldin Volcano</td>
-    </tr>
-    <tr data-tipo="suporte">
-      <td>🍹 Smoothie + ⚔️ Espadachim</td>
-      <td>Cura rápida antes do combate</td>
-      <td>Suporte</td>
-      <td>Arenas e chefes</td>
-    </tr>
-    <tr data-tipo="suporte">
-      <td>🛏️ Cama Velha + 🍹 Smoothie</td>
-      <td>Plataforma de descanso com buffs</td>
-      <td>Suporte</td>
-      <td>Exploração prolongada</td>
-    </tr>
-    <tr data-tipo="exploracao">
-      <td>🪶 Piso Voador + 🌪️ Ventilador</td>
-      <td>Plataforma móvel com controle direcional</td>
-      <td>Exploração</td>
-      <td>Travessias longas</td>
-    </tr>
-    <tr data-tipo="combate">
-      <td>⚔️ Espadachim + 🪀 Trampolim</td>
-      <td>Ataque surpresa com salto vertical</td>
-      <td>Combate</td>
-      <td>Emboscadas aéreas</td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Estilo moderno e responsivo -->
 <style>
   :root {
     --cor-primaria: #2c3e50;
@@ -89,7 +28,7 @@
     margin-bottom: 10px;
   }
 
-  button, select {
+  button, select, input {
     background-color: var(--cor-secundaria);
     color: white;
     border: none;
@@ -99,6 +38,12 @@
     cursor: pointer;
     font-size: 16px;
     transition: background 0.3s ease;
+  }
+
+  input {
+    background-color: white;
+    color: var(--cor-primaria);
+    border: 2px solid var(--cor-secundaria);
   }
 
   button:hover, select:hover {
@@ -125,15 +70,22 @@
     background-color: #ecf0f1;
   }
 
-  tr:hover {
-    background-color: var(--cor-destaque);
+  tr {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
-  #comboTable tbody tr {
-    transition: all 0.3s ease;
+  tr.hide {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    display: none;
   }
 
-  #comboTable tbody tr.show {
+  tr.show {
+    display: table-row;
+    opacity: 1;
+    visibility: visible;
     animation: fadeSlide 0.4s ease forwards;
   }
 
@@ -142,8 +94,14 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  #filtroStatus {
+    font-style: italic;
+    margin-top: 10px;
+    color: #555;
+  }
+
   @media (max-width: 600px) {
-    button, select {
+    button, select, input {
       width: 100%;
       margin: 8px 0;
     }
@@ -153,19 +111,162 @@
     }
   }
 </style>
+</head>
+<body>
 
-<!-- Script com animação e filtro -->
+<h2>🧪 Combinações Estratégicas de Ecos</h2>
+
+<section aria-label="Filtros para combinações">
+  <label for="comboFilter">Filtrar por tipo:</label>
+  <select id="comboFilter" aria-label="Filtrar por tipo de combinação" onchange="filtrarCombos()">
+    <option value="todos">Todos</option>
+    <option value="exploracao">Exploração</option>
+    <option value="combate">Combate</option>
+    <option value="suporte">Suporte</option>
+  </select>
+
+  <input type="text" id="buscaTexto" placeholder="🔍 Buscar por nome ou efeito..." oninput="filtrarCombos()" />
+</section>
+
+<p id="filtroStatus" aria-live="polite"></p>
+
+<table id="comboTable" aria-label="Tabela de combinações estratégicas de ecos">
+  <caption class="sr-only">Tabela com combinações de ecos e seus efeitos estratégicos</caption>
+  <thead>
+    <tr>
+      <th>Combinação</th>
+      <th>Efeito Estratégico</th>
+      <th>Tipo</th>
+      <th>Região Recomendada</th>
+    </tr>
+  </thead>
+  <tbody id="comboBody">
+    <!-- Linhas geradas via JavaScript -->
+  </tbody>
+</table>
+
 <script>
-  function filtrarCombos(tipo) {
-    document.querySelectorAll('#comboTable tbody tr').forEach(row => {
-      row.classList.remove('show');
-      if (tipo === 'todos' || row.dataset.tipo === tipo) {
-        row.style.display = '';
-        void row.offsetWidth; // Reinicia a animação
-        row.classList.add('show');
-      } else {
-        row.style.display = 'none';
-      }
+  const combinacoes = [
+    {
+      combinacao: "🛏️ Cama Velha + 🪀 Trampolim",
+      efeito: "Escadas com impulso vertical",
+      tipo: "exploracao",
+      regiao: "Gerudo Desert, Hyrule Castle"
+    },
+    {
+      combinacao: "🪀 Trampolim + 🪶 Piso Voador",
+      efeito: "Ponte móvel com salto vertical",
+      tipo: "exploracao",
+      regiao: "Jabul Waters, Eternal Forest"
+    },
+    {
+      combinacao: "🌪️ Ventilador + 🧊 Bloco de Gelo",
+      efeito: "Empurra bloco congelado para ativar mecanismos",
+      tipo: "combate",
+      regiao: "Eldin Volcano"
+    },
+    {
+      combinacao: "🍹 Smoothie + ⚔️ Espadachim",
+      efeito: "Cura rápida antes do combate",
+      tipo: "suporte",
+      regiao: "Arenas e chefes"
+    },
+    {
+      combinacao: "🛏️ Cama Velha + 🍹 Smoothie",
+      efeito: "Plataforma de descanso com buffs",
+      tipo: "suporte",
+      regiao: "Exploração prolongada"
+    },
+    {
+      combinacao: "🪶 Piso Voador + 🌪️ Ventilador",
+      efeito: "Plataforma móvel com controle direcional",
+      tipo: "exploracao",
+      regiao: "Travessias longas"
+    },
+    {
+      combinacao: "⚔️ Espadachim + 🪀 Trampolim",
+      efeito: "Ataque surpresa com salto vertical",
+      tipo: "combate",
+      regiao: "Emboscadas aéreas"
+    },
+    {
+      combinacao: "🛡️ Escudo Refletor + 🍹 Smoothie",
+      efeito: "Cria uma barreira temporária que cura ao bloquear ataques",
+      tipo: "suporte",
+      regiao: "Santuários, Dungeons com armadilhas"
+    },
+    {
+      combinacao: "⛏️ Picareta + 🌪️ Ventilador",
+      efeito: "Permite cavar áreas instáveis com remoção rápida de detritos",
+      tipo: "exploracao",
+      regiao: "Cavernas colapsadas, Zonas sísmicas"
+    },
+    {
+      combinacao: "🔥 Canhão + 🧊 Bloco de Gelo",
+      efeito: "Dispara projéteis congelantes com dano em área",
+      tipo: "combate",
+      regiao: "Campos abertos, Chefes elementais"
+    }
+  ];
+
+  function capitalizar(texto) {
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+  }
+
+  function gerarTabela() {
+    const corpoTabela = document.getElementById("comboBody");
+    corpoTabela.innerHTML = ""; // Limpa antes de gerar
+
+    combinacoes.forEach(combo => {
+      const tr = document.createElement("tr");
+      tr.dataset.tipo = combo.tipo;
+
+      tr.innerHTML = `
+        <td>${combo.combinacao}</td>
+        <td>${combo.efeito}</td>
+        <td>${capitalizar(combo.tipo)}</td>
+        <td>${combo.regiao}</td>
+      `;
+
+      corpoTabela.appendChild(tr);
     });
   }
+
+  function filtrarCombos() {
+    const tipoSelecionado = document.getElementById('comboFilter').value;
+    const textoBusca = document.getElementById('buscaTexto').value.toLowerCase();
+    const linhas = document.querySelectorAll('#comboTable tbody tr');
+
+    let visiveis = 0;
+
+    linhas.forEach(row => {
+      const tipo = row.dataset.tipo;
+      const combinacao = row.children[0].textContent.toLowerCase();
+      const efeito = row.children[1].textContent.toLowerCase();
+
+      const correspondeTipo = (tipoSelecionado === 'todos' || tipo === tipoSelecionado);
+      const correspondeTexto = (combinacao.includes(textoBusca) || efeito.includes(textoBusca));
+
+      if (correspondeTipo && correspondeTexto) {
+        row.classList.remove('hide');
+        row.classList.add('show');
+        visiveis++;
+      } else {
+        row.classList.remove('show');
+        row.classList.add('hide');
+      }
+    });
+
+    const texto = textoBusca ? ` contendo "${textoBusca}"` : '';
+    const tipoTexto = tipoSelecionado === 'todos' ? 'todas as combinações' : `combinações do tipo "${tipoSelecionado}"`;
+    document.getElementById('filtroStatus').textContent = `Mostrando ${visiveis} ${tipoTexto}${texto}`;
+  }
+
+  window.onload = () => {
+    gerarTabela();
+    filtrarCombos();
+  };
 </script>
+
+</body>
+</html>
