@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Combinações Estratégicas de Ecos</title>
+<title>Plano de Treino Gamer</title>
 
 <style>
   :root {
@@ -37,13 +37,18 @@
     margin: 6px 4px;
     cursor: pointer;
     font-size: 16px;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
   }
 
   input {
     background-color: white;
     color: var(--cor-primaria);
     border: 2px solid var(--cor-secundaria);
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--cor-secundaria);
   }
 
   button:hover, select:hover {
@@ -89,6 +94,10 @@
     animation: fadeSlide 0.4s ease forwards;
   }
 
+  tr:hover {
+    background-color: #ecf8ff;
+  }
+
   @keyframes fadeSlide {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -114,99 +123,51 @@
 </head>
 <body>
 
-<h2>🧪 Combinações Estratégicas de Ecos</h2>
+<h2>🎮 Plano de Treino Gamer</h2>
 
-<section aria-label="Filtros para combinações">
-  <label for="comboFilter">Filtrar por tipo:</label>
-  <select id="comboFilter" aria-label="Filtrar por tipo de combinação" onchange="filtrarCombos()">
+<section aria-label="Filtros para treinos">
+  <label for="treinoFilter">Filtrar por tipo:</label>
+  <select id="treinoFilter" aria-label="Filtrar por tipo de treino" onchange="filtrarTreinos()">
     <option value="todos">Todos</option>
-    <option value="exploracao">Exploração</option>
-    <option value="combate">Combate</option>
-    <option value="suporte">Suporte</option>
+    <option value="mira">Mira</option>
+    <option value="estrategia">Estratégia</option>
+    <option value="reflexos">Reflexos</option>
+    <option value="coordenacao">Coordenação</option>
   </select>
 
-  <input type="text" id="buscaTexto" placeholder="🔍 Buscar por nome ou efeito..." oninput="filtrarCombos()" />
+  <input type="text" id="buscaTexto" placeholder="🔍 Buscar por nome ou descrição..." oninput="filtrarTreinos()" />
 </section>
 
 <p id="filtroStatus" aria-live="polite"></p>
 
-<table id="comboTable" aria-label="Tabela de combinações estratégicas de ecos">
-  <caption class="sr-only">Tabela com combinações de ecos e seus efeitos estratégicos</caption>
+<table id="treinoTable" aria-label="Tabela de treinos gamer">
+  <caption class="sr-only">Tabela com treinos gamer, emojis e objetivos principais</caption>
   <thead>
     <tr>
-      <th>Combinação</th>
-      <th>Efeito Estratégico</th>
-      <th>Tipo</th>
-      <th>Região Recomendada</th>
+      <th>Emoji</th>
+      <th>Treino</th>
+      <th>Descrição</th>
+      <th>Objetivo</th>
+      <th>Duração</th>
     </tr>
   </thead>
-  <tbody id="comboBody">
+  <tbody id="treinoBody">
     <!-- Linhas geradas via JavaScript -->
   </tbody>
 </table>
 
 <script>
-  const combinacoes = [
-    {
-      combinacao: "🛏️ Cama Velha + 🪀 Trampolim",
-      efeito: "Escadas com impulso vertical",
-      tipo: "exploracao",
-      regiao: "Gerudo Desert, Hyrule Castle"
-    },
-    {
-      combinacao: "🪀 Trampolim + 🪶 Piso Voador",
-      efeito: "Ponte móvel com salto vertical",
-      tipo: "exploracao",
-      regiao: "Jabul Waters, Eternal Forest"
-    },
-    {
-      combinacao: "🌪️ Ventilador + 🧊 Bloco de Gelo",
-      efeito: "Empurra bloco congelado para ativar mecanismos",
-      tipo: "combate",
-      regiao: "Eldin Volcano"
-    },
-    {
-      combinacao: "🍹 Smoothie + ⚔️ Espadachim",
-      efeito: "Cura rápida antes do combate",
-      tipo: "suporte",
-      regiao: "Arenas e chefes"
-    },
-    {
-      combinacao: "🛏️ Cama Velha + 🍹 Smoothie",
-      efeito: "Plataforma de descanso com buffs",
-      tipo: "suporte",
-      regiao: "Exploração prolongada"
-    },
-    {
-      combinacao: "🪶 Piso Voador + 🌪️ Ventilador",
-      efeito: "Plataforma móvel com controle direcional",
-      tipo: "exploracao",
-      regiao: "Travessias longas"
-    },
-    {
-      combinacao: "⚔️ Espadachim + 🪀 Trampolim",
-      efeito: "Ataque surpresa com salto vertical",
-      tipo: "combate",
-      regiao: "Emboscadas aéreas"
-    },
-    {
-      combinacao: "🛡️ Escudo Refletor + 🍹 Smoothie",
-      efeito: "Cria uma barreira temporária que cura ao bloquear ataques",
-      tipo: "suporte",
-      regiao: "Santuários, Dungeons com armadilhas"
-    },
-    {
-      combinacao: "⛏️ Picareta + 🌪️ Ventilador",
-      efeito: "Permite cavar áreas instáveis com remoção rápida de detritos",
-      tipo: "exploracao",
-      regiao: "Cavernas colapsadas, Zonas sísmicas"
-    },
-    {
-      combinacao: "🔥 Canhão + 🧊 Bloco de Gelo",
-      efeito: "Dispara projéteis congelantes com dano em área",
-      tipo: "combate",
-      regiao: "Campos abertos, Chefes elementais"
-    }
+  const treinos = [
+    { emoji: "🧘", nome: "Alongamento Rápido", desc: "Alongamento de mãos, punhos, ombros e pescoço", tipo: "reflexos", objetivo: "Preparação física", duracao: "5 min" },
+    { emoji: "✊", nome: "Exercício de Dedos", desc: "Apertar bola de borracha ou digitar rápido", tipo: "coordenacao", objetivo: "Coordenação manual", duracao: "5 min" },
+    { emoji: "🎯", nome: "Aquecimento de Mira", desc: "Prática de mira em alvos estáticos", tipo: "mira", objetivo: "Precisão", duracao: "5 min" },
+    { emoji: "🏹", nome: "Tracking", desc: "Seguir inimigos em movimento", tipo: "mira", objetivo: "Rastreamento", duracao: "5-10 min" },
+    { emoji: "⚡", nome: "Flick Shots", desc: "Treino de precisão rápida", tipo: "mira", objetivo: "Reação rápida", duracao: "5-10 min" },
+    { emoji: "📺", nome: "Replay Analysis", desc: "Revisão de partidas e decisões", tipo: "estrategia", objetivo: "Estratégia", duracao: "15 min" },
+    { emoji: "🗺️", nome: "Map Awareness", desc: "Estudo de mapas, posições e timings", tipo: "estrategia", objetivo: "Posicionamento", duracao: "15 min" },
+    { emoji: "⏱️", nome: "Mini-jogos de Reflexo", desc: "Treinos online de reação rápida", tipo: "reflexos", objetivo: "Reflexo rápido", duracao: "10 min" },
+    { emoji: "🎵", nome: "Jogos de Ritmo", desc: "Coordenação mão-olho com jogos de ritmo", tipo: "coordenacao", objetivo: "Coordenação", duracao: "15 min" },
+    { emoji: "🎮", nome: "Partidas de Treino", desc: "Aplicar técnicas em partidas reais", tipo: "estrategia", objetivo: "Execução prática", duracao: "1-2 h" }
   ];
 
   function capitalizar(texto) {
@@ -214,38 +175,41 @@
   }
 
   function gerarTabela() {
-    const corpoTabela = document.getElementById("comboBody");
-    corpoTabela.innerHTML = ""; // Limpa antes de gerar
+    const corpoTabela = document.getElementById("treinoBody");
+    corpoTabela.innerHTML = "";
 
-    combinacoes.forEach(combo => {
+    treinos.forEach(treino => {
       const tr = document.createElement("tr");
-      tr.dataset.tipo = combo.tipo;
-
+      tr.dataset.tipo = treino.tipo;
       tr.innerHTML = `
-        <td>${combo.combinacao}</td>
-        <td>${combo.efeito}</td>
-        <td>${capitalizar(combo.tipo)}</td>
-        <td>${combo.regiao}</td>
+        <td>${treino.emoji}</td>
+        <td>${treino.nome}</td>
+        <td>${treino.desc}</td>
+        <td>${treino.objetivo}</td>
+        <td>${treino.duracao}</td>
       `;
-
       corpoTabela.appendChild(tr);
     });
   }
 
-  function filtrarCombos() {
-    const tipoSelecionado = document.getElementById('comboFilter').value;
-    const textoBusca = document.getElementById('buscaTexto').value.toLowerCase();
-    const linhas = document.querySelectorAll('#comboTable tbody tr');
+  function removerAcentos(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function filtrarTreinos() {
+    const tipoSelecionado = document.getElementById('treinoFilter').value;
+    const textoBusca = removerAcentos(document.getElementById('buscaTexto').value.toLowerCase());
+    const linhas = document.querySelectorAll('#treinoTable tbody tr');
 
     let visiveis = 0;
 
     linhas.forEach(row => {
       const tipo = row.dataset.tipo;
-      const combinacao = row.children[0].textContent.toLowerCase();
-      const efeito = row.children[1].textContent.toLowerCase();
+      const nome = removerAcentos(row.children[1].textContent.toLowerCase());
+      const desc = removerAcentos(row.children[2].textContent.toLowerCase());
 
       const correspondeTipo = (tipoSelecionado === 'todos' || tipo === tipoSelecionado);
-      const correspondeTexto = (combinacao.includes(textoBusca) || efeito.includes(textoBusca));
+      const correspondeTexto = (nome.includes(textoBusca) || desc.includes(textoBusca));
 
       if (correspondeTipo && correspondeTexto) {
         row.classList.remove('hide');
@@ -257,14 +221,17 @@
       }
     });
 
-    const texto = textoBusca ? ` contendo "${textoBusca}"` : '';
-    const tipoTexto = tipoSelecionado === 'todos' ? 'todas as combinações' : `combinações do tipo "${tipoSelecionado}"`;
-    document.getElementById('filtroStatus').textContent = `Mostrando ${visiveis} ${tipoTexto}${texto}`;
+    let texto = textoBusca ? ` contendo "${textoBusca}"` : '';
+    let tipoTexto = tipoSelecionado === 'todos' ? 'todos os treinos' : `treinos do tipo "${capitalizar(tipoSelecionado)}"`;
+
+    document.getElementById('filtroStatus').textContent = visiveis
+      ? `Mostrando ${visiveis} ${tipoTexto}${texto}`
+      : "Nenhum treino encontrado.";
   }
 
   window.onload = () => {
     gerarTabela();
-    filtrarCombos();
+    filtrarTreinos();
   };
 </script>
 
